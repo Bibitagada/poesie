@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>CM1B - Léonard de Vinci</title>
+  <title>CM1B - Poésies de Léonard de Vinci</title>
   <style>
     body {
       font-family: "Quicksand", "Arial", sans-serif;
@@ -16,8 +16,8 @@
     }
 
     .container {
-      max-width: 950px;
-      width: 95%;
+      max-width: 980px;
+      width: 96%;
       margin: 24px auto;
       background: #ffffff;
       border-radius: 24px;
@@ -77,6 +77,39 @@
       margin: 4px 0 16px 0;
     }
 
+    .switcher {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .switch-btn {
+      background: #29b6f6;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+    }
+
+    .switch-btn.active {
+      background: #0288d1;
+    }
+
+    .switch-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 5px 12px rgba(0,0,0,0.2);
+    }
+
     .toolbar {
       display: flex;
       flex-wrap: wrap;
@@ -89,7 +122,7 @@
       border: 1px dashed #ffb74d;
     }
 
-    button {
+    button.tool {
       background: #ff9800;
       color: white;
       border: none;
@@ -105,21 +138,12 @@
       transition: transform 0.15s, box-shadow 0.15s;
     }
 
-    button:hover {
+    button.tool:hover {
       transform: translateY(-1px);
       box-shadow: 0 5px 12px rgba(0,0,0,0.2);
     }
 
-    button:active {
-      transform: translateY(0);
-      box-shadow: 0 2px 6px rgba(0,0,0,0.16);
-    }
-
-    .btn-secondary {
-      background: #29b6f6;
-    }
-
-    .btn-danger {
+    button.tool.btn-danger {
       background: #e53935;
     }
 
@@ -153,6 +177,7 @@
       border: 2px solid #90caf9;
       position: relative;
       overflow: hidden;
+      min-height: 260px;
     }
 
     .poem-card::before {
@@ -191,9 +216,17 @@
     }
 
     .hidden-word {
-      color: #f5f5f5;     /* très clair */
+      color: #f5f5f5;
       text-shadow: none;
-      filter: blur(2px);  /* léger flou : illisible */
+      filter: blur(2px);
+    }
+
+    .poem-page {
+      display: none;
+    }
+
+    .poem-page.active {
+      display: block;
     }
 
     footer {
@@ -213,7 +246,7 @@
     <header>
       <div>
         <div class="class-name">CM1B</div>
-        <div class="subtitle">Poésie – Léonard de Vinci</div>
+        <div class="subtitle">Poésies – Léonard de Vinci</div>
       </div>
       <div class="badge">
         <span class="icon">📚</span>
@@ -222,29 +255,51 @@
     </header>
 
     <main>
-      <h1>Texte à cliquer</h1>
+      <h1>Textes à cliquer</h1>
       <p class="instructions">
         Lis la poésie à voix haute. À chaque nouvelle lecture, clique sur quelques mots pour les « effacer ».  
-        Un clic = le mot disparaît (gris + flou). Un deuxième clic = le mot revient.
+        Un clic = le mot disparaît. Un deuxième clic = le mot revient. Utilise les boutons pour changer de poésie.
       </p>
 
-      <div class="toolbar">
-        <button id="btnReset" class="btn-secondary">
-          🔁 Tout réafficher
-        </button>
-        <button id="btnHideRandom" class="btn-danger">
-          🎲 Effacer quelques mots au hasard
-        </button>
-        <span class="counter-chip">
-          <span class="counter-dot"></span>
-          <span id="counter" class="small"></span>
-        </span>
+      <!-- Boutons de switch entre les poésies -->
+      <div class="switcher">
+        <button class="switch-btn active" data-target="poem1">📄 Poésie 1</button>
+        <button class="switch-btn" data-target="poem2">📄 Poésie 2</button>
       </div>
 
-      <div class="poem-card">
-        <div class="poem-title-line">« Léonard de Vinci »</div>
-        <div id="poem" class="poem"></div>
-      </div>
+      <!-- PAGE POÉSIE 1 -->
+      <section id="poem1" class="poem-page active">
+        <div class="toolbar">
+          <button class="tool" id="reset1">🔁 Tout réafficher (poésie 1)</button>
+          <button class="tool btn-danger" id="random1">🎲 Effacer quelques mots au hasard</button>
+          <span class="counter-chip">
+            <span class="counter-dot"></span>
+            <span id="counter1" class="small"></span>
+          </span>
+        </div>
+
+        <div class="poem-card">
+          <div class="poem-title-line">Poésie 1 – « Léonard de Vinci »</div>
+          <div id="poemArea1" class="poem"></div>
+        </div>
+      </section>
+
+      <!-- PAGE POÉSIE 2 -->
+      <section id="poem2" class="poem-page">
+        <div class="toolbar">
+          <button class="tool" id="reset2">🔁 Tout réafficher (poésie 2)</button>
+          <button class="tool btn-danger" id="random2">🎲 Effacer quelques mots au hasard</button>
+          <span class="counter-chip">
+            <span class="counter-dot"></span>
+            <span id="counter2" class="small"></span>
+          </span>
+        </div>
+
+        <div class="poem-card">
+          <div class="poem-title-line">Poésie 2 – « Léonard de Vinci »</div>
+          <div id="poemArea2" class="poem"></div>
+        </div>
+      </section>
     </main>
 
     <footer>
@@ -254,7 +309,8 @@
   </div>
 
   <script>
-    const POEM_TEXT = `Léonard de Vinci
+    // Textes des deux poésies
+    const POEM1 = `Léonard de Vinci
 
 Léonard naît en Italie, un matin de printemps,
 Curieux, il veut comprendre le monde en l'observant.
@@ -274,27 +330,39 @@ Car apprendre, pour lui, c'est avancer plus fort.
 Alors, dans notre classe, on fait comme Léonard :
 On regarde, on dessine, on comprend, on repart.`;
 
-    const poemDiv = document.getElementById('poem');
-    const btnReset = document.getElementById('btnReset');
-    const btnHideRandom = document.getElementById('btnHideRandom');
-    const counterSpan = document.getElementById('counter');
+    const POEM2 = `Léonard de Vinci
 
-    function renderPoem() {
-      poemDiv.innerHTML = "";
-      const lines = POEM_TEXT.split("\n");
+Léonard, enfant d’Italie, observe autour de lui.
+Il dessine ce qu’il voit, même le vent qui fuit.
+Dans ses carnets, il note des idées de machines,
+Des ponts, des roues, des ailes, des formes très fines.
 
-      lines.forEach((line) => {
+Il peint avec patience un visage et sa lumière,
+Il cherche le bon trait, il recommence, il persévère.
+Curieux, il veut comprendre : « Pourquoi ? Comment ? » toujours,
+Et il apprend sans cesse, jour après jour, toujours.
+
+Son esprit est un atelier, plein de rêves et de plans :
+Créer, c’est regarder, essayer… et prendre son temps.`;
+
+    // Fonction générique pour rendre une poésie cliquable
+    function renderPoem(text, containerId, counterId) {
+      const container = document.getElementById(containerId);
+      container.innerHTML = "";
+      const lines = text.split("\n");
+
+      lines.forEach(line => {
         const lineContainer = document.createElement("div");
 
         if (line.trim() === "") {
           lineContainer.innerHTML = "<br>";
-          poemDiv.appendChild(lineContainer);
+          container.appendChild(lineContainer);
           return;
         }
 
         const parts = line.split(/(\s+)/); // conserve les espaces
 
-        parts.forEach((part) => {
+        parts.forEach(part => {
           if (part.match(/^\s+$/)) {
             lineContainer.appendChild(document.createTextNode(part));
           } else {
@@ -312,48 +380,90 @@ On regarde, on dessine, on comprend, on repart.`;
                 span.dataset.hidden = "true";
                 span.classList.add("hidden-word");
               }
-              updateCounter();
+              updateCounter(containerId, counterId);
             });
 
             lineContainer.appendChild(span);
           }
         });
 
-        poemDiv.appendChild(lineContainer);
+        container.appendChild(lineContainer);
       });
 
-      updateCounter();
+      updateCounter(containerId, counterId);
     }
 
-    function updateCounter() {
-      const allWords = poemDiv.querySelectorAll(".word");
-      const hiddenWords = poemDiv.querySelectorAll(".word.hidden-word");
-      counterSpan.textContent = `${hiddenWords.length} mots cachés sur ${allWords.length}`;
+    function updateCounter(containerId, counterId) {
+      const container = document.getElementById(containerId);
+      const allWords = container.querySelectorAll(".word");
+      const hiddenWords = container.querySelectorAll(".word.hidden-word");
+      document.getElementById(counterId).textContent =
+        `${hiddenWords.length} mots cachés sur ${allWords.length}`;
     }
 
-    btnReset.addEventListener("click", () => {
-      poemDiv.querySelectorAll(".word").forEach(span => {
+    function resetPoem(containerId, counterId) {
+      const container = document.getElementById(containerId);
+      container.querySelectorAll(".word").forEach(span => {
         span.dataset.hidden = "false";
         span.classList.remove("hidden-word");
       });
-      updateCounter();
-    });
+      updateCounter(containerId, counterId);
+    }
 
-    // Petit bonus : bouton pour effacer quelques mots au hasard
-    btnHideRandom.addEventListener("click", () => {
-      const allWords = Array.from(poemDiv.querySelectorAll(".word"));
+    function hideRandom(containerId, counterId) {
+      const container = document.getElementById(containerId);
+      const allWords = Array.from(container.querySelectorAll(".word"));
       if (allWords.length === 0) return;
-
       const toHide = Math.max(3, Math.round(allWords.length * 0.1)); // ≈10 % ou au moins 3
       const shuffled = allWords.sort(() => Math.random() - 0.5);
       shuffled.slice(0, toHide).forEach(span => {
         span.dataset.hidden = "true";
         span.classList.add("hidden-word");
       });
-      updateCounter();
+      updateCounter(containerId, counterId);
+    }
+
+    // Initialisation des deux poésies
+    renderPoem(POEM1, "poemArea1", "counter1");
+    renderPoem(POEM2, "poemArea2", "counter2");
+
+    // Boutons reset / random pour chaque poésie
+    document.getElementById("reset1").addEventListener("click", () => {
+      resetPoem("poemArea1", "counter1");
+    });
+    document.getElementById("random1").addEventListener("click", () => {
+      hideRandom("poemArea1", "counter1");
     });
 
-    renderPoem();
+    document.getElementById("reset2").addEventListener("click", () => {
+      resetPoem("poemArea2", "counter2");
+    });
+    document.getElementById("random2").addEventListener("click", () => {
+      hideRandom("poemArea2", "counter2");
+    });
+
+    // Gestion du switch entre les deux poésies
+    const switchButtons = document.querySelectorAll(".switch-btn");
+    const pages = document.querySelectorAll(".poem-page");
+
+    switchButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        const targetId = btn.dataset.target;
+
+        // bouton actif
+        switchButtons.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+
+        // afficher la bonne section
+        pages.forEach(page => {
+          if (page.id === targetId) {
+            page.classList.add("active");
+          } else {
+            page.classList.remove("active");
+          }
+        });
+      });
+    });
   </script>
 </body>
 </html>
