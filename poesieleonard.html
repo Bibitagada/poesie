@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>CM1B - Léonard de Vinci</title>
+  <style>
+    body {
+      font-family: "Quicksand", "Arial", sans-serif;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 50%, #a1c4fd 100%);
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .container {
+      max-width: 950px;
+      width: 95%;
+      margin: 24px auto;
+      background: #ffffff;
+      border-radius: 24px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      overflow: hidden;
+      border: 4px solid #ffb74d;
+    }
+
+    header {
+      background: linear-gradient(90deg, #ff9800, #ff5722);
+      color: white;
+      padding: 18px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header .class-name {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    header .subtitle {
+      font-size: 16px;
+      font-weight: 400;
+    }
+
+    .badge {
+      background: #ffffff22;
+      border-radius: 999px;
+      padding: 6px 14px;
+      font-size: 13px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .badge span.icon {
+      font-size: 16px;
+    }
+
+    main {
+      padding: 24px;
+      background: radial-gradient(circle at top left, #fff3e0 0%, #ffffff 55%);
+    }
+
+    h1 {
+      margin: 0 0 8px 0;
+      font-size: 26px;
+      color: #37474f;
+    }
+
+    p.instructions {
+      font-size: 14px;
+      color: #546e7a;
+      margin: 4px 0 16px 0;
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 18px;
+      align-items: center;
+      padding: 10px 12px;
+      background: #fff8e1;
+      border-radius: 16px;
+      border: 1px dashed #ffb74d;
+    }
+
+    button {
+      background: #ff9800;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 5px 12px rgba(0,0,0,0.2);
+    }
+
+    button:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.16);
+    }
+
+    .btn-secondary {
+      background: #29b6f6;
+    }
+
+    .btn-danger {
+      background: #e53935;
+    }
+
+    .small {
+      font-size: 13px;
+      color: #455a64;
+    }
+
+    .counter-chip {
+      background: #ffffff;
+      border-radius: 999px;
+      padding: 6px 12px;
+      border: 1px solid #ffcc80;
+      font-size: 13px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .counter-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #ff9800;
+    }
+
+    .poem-card {
+      background: #e3f2fd;
+      border-radius: 20px;
+      padding: 18px 20px;
+      border: 2px solid #90caf9;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .poem-card::before {
+      content: "🎨";
+      position: absolute;
+      right: 16px;
+      top: 10px;
+      font-size: 24px;
+      opacity: 0.25;
+    }
+
+    .poem-title-line {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #1e88e5;
+    }
+
+    .poem {
+      font-size: 20px;
+      line-height: 1.7;
+      white-space: pre-wrap;
+      position: relative;
+      z-index: 1;
+    }
+
+    .word {
+      cursor: pointer;
+      padding: 0 2px;
+      border-radius: 4px;
+      transition: all 0.2s;
+    }
+
+    .word:hover {
+      background: #fff9c4;
+    }
+
+    .hidden-word {
+      color: #f5f5f5;     /* très clair */
+      text-shadow: none;
+      filter: blur(2px);  /* léger flou : illisible */
+    }
+
+    footer {
+      padding: 10px 24px 16px 24px;
+      font-size: 12px;
+      color: #607d8b;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #fafafa;
+      border-top: 1px solid #eee;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div>
+        <div class="class-name">CM1B</div>
+        <div class="subtitle">Poésie – Léonard de Vinci</div>
+      </div>
+      <div class="badge">
+        <span class="icon">📚</span>
+        Lecture à voix haute & mémorisation
+      </div>
+    </header>
+
+    <main>
+      <h1>Texte à cliquer</h1>
+      <p class="instructions">
+        Lis la poésie à voix haute. À chaque nouvelle lecture, clique sur quelques mots pour les « effacer ».  
+        Un clic = le mot disparaît (gris + flou). Un deuxième clic = le mot revient.
+      </p>
+
+      <div class="toolbar">
+        <button id="btnReset" class="btn-secondary">
+          🔁 Tout réafficher
+        </button>
+        <button id="btnHideRandom" class="btn-danger">
+          🎲 Effacer quelques mots au hasard
+        </button>
+        <span class="counter-chip">
+          <span class="counter-dot"></span>
+          <span id="counter" class="small"></span>
+        </span>
+      </div>
+
+      <div class="poem-card">
+        <div class="poem-title-line">« Léonard de Vinci »</div>
+        <div id="poem" class="poem"></div>
+      </div>
+    </main>
+
+    <footer>
+      <span>CM1B – Entraînement à la récitation</span>
+      <span>Cliquer = cacher / montrer les mots</span>
+    </footer>
+  </div>
+
+  <script>
+    const POEM_TEXT = `Léonard de Vinci
+
+Léonard naît en Italie, un matin de printemps,
+Curieux, il veut comprendre le monde en l'observant.
+Il remplit des carnets de dessins et d'idées,
+Des vis, des roues, des ailes, des ponts imaginés.
+
+Il étudie les plantes, le vol et les rivières,
+La lumière sur un visage, l'ombre et la poussière.
+Peintre patient, il cherche le geste le plus doux,
+Pour donner à un sourire un mystère un peu flou.
+
+Inventeur rêveur, il questionne le futur,
+Et note : « Essaye, observe » au lieu d'être trop sûr.
+Dans l'atelier, il doute, puis recommence encore,
+Car apprendre, pour lui, c'est avancer plus fort.
+
+Alors, dans notre classe, on fait comme Léonard :
+On regarde, on dessine, on comprend, on repart.`;
+
+    const poemDiv = document.getElementById('poem');
+    const btnReset = document.getElementById('btnReset');
+    const btnHideRandom = document.getElementById('btnHideRandom');
+    const counterSpan = document.getElementById('counter');
+
+    function renderPoem() {
+      poemDiv.innerHTML = "";
+      const lines = POEM_TEXT.split("\n");
+
+      lines.forEach((line) => {
+        const lineContainer = document.createElement("div");
+
+        if (line.trim() === "") {
+          lineContainer.innerHTML = "<br>";
+          poemDiv.appendChild(lineContainer);
+          return;
+        }
+
+        const parts = line.split(/(\s+)/); // conserve les espaces
+
+        parts.forEach((part) => {
+          if (part.match(/^\s+$/)) {
+            lineContainer.appendChild(document.createTextNode(part));
+          } else {
+            const span = document.createElement("span");
+            span.textContent = part;
+            span.classList.add("word");
+            span.dataset.hidden = "false";
+
+            span.addEventListener("click", () => {
+              const isHidden = span.dataset.hidden === "true";
+              if (isHidden) {
+                span.dataset.hidden = "false";
+                span.classList.remove("hidden-word");
+              } else {
+                span.dataset.hidden = "true";
+                span.classList.add("hidden-word");
+              }
+              updateCounter();
+            });
+
+            lineContainer.appendChild(span);
+          }
+        });
+
+        poemDiv.appendChild(lineContainer);
+      });
+
+      updateCounter();
+    }
+
+    function updateCounter() {
+      const allWords = poemDiv.querySelectorAll(".word");
+      const hiddenWords = poemDiv.querySelectorAll(".word.hidden-word");
+      counterSpan.textContent = `${hiddenWords.length} mots cachés sur ${allWords.length}`;
+    }
+
+    btnReset.addEventListener("click", () => {
+      poemDiv.querySelectorAll(".word").forEach(span => {
+        span.dataset.hidden = "false";
+        span.classList.remove("hidden-word");
+      });
+      updateCounter();
+    });
+
+    // Petit bonus : bouton pour effacer quelques mots au hasard
+    btnHideRandom.addEventListener("click", () => {
+      const allWords = Array.from(poemDiv.querySelectorAll(".word"));
+      if (allWords.length === 0) return;
+
+      const toHide = Math.max(3, Math.round(allWords.length * 0.1)); // ≈10 % ou au moins 3
+      const shuffled = allWords.sort(() => Math.random() - 0.5);
+      shuffled.slice(0, toHide).forEach(span => {
+        span.dataset.hidden = "true";
+        span.classList.add("hidden-word");
+      });
+      updateCounter();
+    });
+
+    renderPoem();
+  </script>
+</body>
+</html>
